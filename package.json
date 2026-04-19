@@ -22,9 +22,15 @@
     "dotenv": "^16.3.1",
     "uuid": "^9.0.1",
     "winston": "^3.11.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "serverless-http": "^3.2.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
+  },
+  "serverless": {
+    "frameworkVersion": ">=3.0.0",
+    "app": "shanye-backend",
+    "component": "express"
   }
 }

@@ -43,6 +43,9 @@ app.use(cors({
     if (origin.endsWith('.vercel.app')) return callback(null, true)
     // 允许 Railway 子域名
     if (origin.endsWith('.railway.app')) return callback(null, true)
+    // 允许阿里云函数计算域名
+    if (origin.endsWith('.fcappdelegation.net')) return callback(null, true)
+    if (origin.endsWith('.fc.aliyuncs.com')) return callback(null, true)
     if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true)
     // 开发模式全部放行
     if (process.env.NODE_ENV !== 'production') return callback(null, true)
