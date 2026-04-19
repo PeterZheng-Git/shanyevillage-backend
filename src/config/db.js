@@ -4,14 +4,18 @@ const { Pool } = require('pg')
 let poolConfig
 
 if (process.env.DATABASE_URL) {
+  // 解析 DATABASE_URL 中的 sslmode 参数
+  const url = new URL(process.env.DATABASE_URL)
+  const urlSSLMode = url.searchParams.get('sslmode')
+  
   poolConfig = {
     connectionString: process.env.DATABASE_URL,
-    ssl: process.env.NODE_ENV === 'production'
-      ? { rejectUnauthorized: false }
-      : false,
+    ssl: {
+      rejectUnauthorized: false,
+    },
     max: 10,
     idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 5000,
+    connectionTimeoutMillis: 10000,
   }
 } else {
   poolConfig = {

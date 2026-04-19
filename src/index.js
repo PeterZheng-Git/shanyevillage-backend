@@ -8,6 +8,16 @@ const rateLimit = require('express-rate-limit')
 const app = express()
 const PORT = process.env.PORT || 3000
 
+// ---- 启动时自动迁移数据库 ----
+;(async () => {
+  try {
+    const { migrate } = require('./db/migrate')
+    await migrate()
+  } catch (err) {
+    console.error('[Migrate] 自动迁移失败:', err.message)
+  }
+})()
+
 // ---- CORS 配置 ----
 // 允许 Vercel 管理后台、本地开发、以及任何 .vercel.app 子域名
 const ALLOWED_ORIGINS = [
