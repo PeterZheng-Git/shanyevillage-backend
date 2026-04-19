@@ -41,6 +41,8 @@ app.use(cors({
     if (!origin) return callback(null, true)
     // 允许 vercel.app 子域名
     if (origin.endsWith('.vercel.app')) return callback(null, true)
+    // 允许 Railway 子域名
+    if (origin.endsWith('.railway.app')) return callback(null, true)
     if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true)
     // 开发模式全部放行
     if (process.env.NODE_ENV !== 'production') return callback(null, true)
