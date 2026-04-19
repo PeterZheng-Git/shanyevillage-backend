@@ -4,18 +4,23 @@ const { Pool } = require('pg')
 let poolConfig
 
 if (process.env.DATABASE_URL) {
-  // 解析 DATABASE_URL 中的 sslmode 参数
-  const url = new URL(process.env.DATABASE_URL)
-  const urlSSLMode = url.searchParams.get('sslmode')
-  
+  // 确保连接串含 sslmode=require 参数
+  let dbUrl = process.env.DATABASE_URL.trim()
+  const url = new URL(dbUrl)
+  if (!url.searchParams.has('sslmode')) {
+    url.searchParams.set('sslmode', 'require')
+  }
+
   poolConfig = {
-    connectionString: process.env.DATABASE_URL,
+    connectionString: url.toString(),
     ssl: {
       rejectUnauthorized: false,
+      // 对于 pooler session 模式，强制 TLS
+      servername: url.hostname,
     },
     max: 10,
     idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 10000,
+    connectionTimeoutMillis: 15000,
   }
 } else {
   poolConfig = {
