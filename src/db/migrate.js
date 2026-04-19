@@ -121,4 +121,6 @@ async function migrate() {
   }
 }
 
+module.exports = { migrate }
+
 migrate()
