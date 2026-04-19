@@ -10,9 +10,7 @@ if (process.env.DATABASE_URL) {
   
   poolConfig = {
     connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false,
-    },
+    ssl: true,
     max: 10,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 10000,
